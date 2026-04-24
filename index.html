@@ -12,6 +12,7 @@ background:#0f1115;
 color:white;
 }
 
+/* HEADER */
 header{
 display:flex;
 justify-content:space-between;
@@ -27,14 +28,33 @@ padding:8px 15px;
 border-radius:20px;
 cursor:pointer;
 color:black;
+position:relative;
 }
 
+/* badge carrinho */
+.badge{
+position:absolute;
+top:-5px;
+right:-5px;
+background:red;
+color:white;
+font-size:12px;
+width:18px;
+height:18px;
+border-radius:50%;
+display:flex;
+align-items:center;
+justify-content:center;
+}
+
+/* delivery */
 .delivery{
 padding:10px 20px;
 color:#aaa;
 font-size:14px;
 }
 
+/* search */
 .search{
 padding:10px 20px;
 }
@@ -46,24 +66,7 @@ border-radius:10px;
 border:none;
 }
 
-.categories{
-display:flex;
-gap:10px;
-padding:10px 20px;
-}
-
-.cat{
-background:#1a1d23;
-padding:8px 15px;
-border-radius:20px;
-cursor:pointer;
-}
-
-.cat.active{
-background:#2ecc71;
-color:black;
-}
-
+/* cards */
 .container{
 display:grid;
 grid-template-columns:repeat(auto-fill,minmax(260px,1fr));
@@ -75,6 +78,17 @@ padding:20px;
 background:#1a1d23;
 border-radius:15px;
 overflow:hidden;
+transition:0.3s;
+animation:fadeIn 0.4s ease;
+}
+
+.card:hover{
+transform:scale(1.02);
+}
+
+@keyframes fadeIn{
+from{opacity:0;transform:translateY(10px)}
+to{opacity:1;transform:translateY(0)}
 }
 
 .card img{
@@ -107,15 +121,19 @@ border-radius:8px;
 cursor:pointer;
 }
 
+/* buttons */
 .details-btn{background:#2a2d35;color:white}
 .add-btn{background:#2ecc71;color:black}
+.fav-btn{background:#ff4d6d;color:white}
 
+/* details */
 .details{
 display:none;
 font-size:13px;
 color:#aaa;
 }
 
+/* CART */
 .cart{
 position:fixed;
 right:-320px;
@@ -130,6 +148,7 @@ z-index:1000;
 
 .cart.open{right:0}
 
+/* overlay */
 .overlay{
 position:fixed;
 top:0;
@@ -143,6 +162,7 @@ z-index:999;
 
 .overlay.show{display:block}
 
+/* checkout */
 .checkout{
 background:#2ecc71;
 color:black;
@@ -153,6 +173,57 @@ margin-top:10px;
 cursor:pointer;
 font-weight:bold;
 }
+
+/* checkout page */
+.checkoutPage{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:#0f1115;
+display:none;
+padding:20px;
+z-index:2000;
+}
+
+.checkoutPage input{
+width:100%;
+padding:10px;
+margin:8px 0;
+border:none;
+border-radius:8px;
+}
+
+.confirm{
+background:#2ecc71;
+color:black;
+padding:10px;
+border-radius:8px;
+cursor:pointer;
+text-align:center;
+margin-top:10px;
+}
+
+/* confirmed page */
+.confirmed{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:#0f1115;
+display:none;
+align-items:center;
+justify-content:center;
+flex-direction:column;
+z-index:3000;
+}
+
+.check{
+font-size:60px;
+color:#2ecc71;
+}
 </style>
 </head>
 
@@ -160,7 +231,11 @@ font-weight:bold;
 
 <header>
 🍱 Risilio
-<div class="cart-btn" onclick="toggleCart()">🛒 Carrinho</div>
+
+<div class="cart-btn" onclick="toggleCart()">
+🛒
+<span class="badge" id="badge">0</span>
+</div>
 </header>
 
 <div class="delivery">
@@ -171,16 +246,9 @@ font-weight:bold;
 <input type="text" placeholder="Procurar..." oninput="render()">
 </div>
 
-<div class="categories">
-<div class="cat active" onclick="setFilter('all',this)">Todos</div>
-<div class="cat" onclick="setFilter('frango',this)">Frango</div>
-<div class="cat" onclick="setFilter('peixe',this)">Peixe</div>
-<div class="cat" onclick="setFilter('veg',this)">Vegetariano</div>
-<div class="cat" onclick="setFilter('low',this)">Low Carb</div>
-</div>
-
 <div class="container" id="menu"></div>
 
+<!-- CART -->
 <div class="overlay" id="overlay" onclick="closeCart()"></div>
 
 <div class="cart" id="cartBox">
@@ -188,9 +256,29 @@ font-weight:bold;
 <ul id="cart"></ul>
 <p>Total: €<span id="total">0</span></p>
 
-<div class="checkout" onclick="checkout()">
+<div class="checkout" onclick="openCheckout()">
 Finalizar Pedido
 </div>
+</div>
+
+<!-- CHECKOUT -->
+<div class="checkoutPage" id="checkoutPage">
+<h2>Checkout</h2>
+
+<input id="name" placeholder="Nome">
+<input id="address" placeholder="Morada">
+<input id="phone" placeholder="Telefone">
+
+<div class="confirm" onclick="confirmOrder()">
+Confirmar Pedido
+</div>
+</div>
+
+<!-- CONFIRMED -->
+<div class="confirmed" id="confirmed">
+<div class="check">✔</div>
+<h2>Pedido Confirmado!</h2>
+<p>Entregamos em breve 🚚</p>
 </div>
 
 <script>
@@ -201,63 +289,32 @@ nome:"Frango + Quinoa Fit",
 preco:9,
 cat:"frango",
 img:"https://images.unsplash.com/photo-1512621776951-a57141f2eefd?auto=format&fit=crop&w=800&q=80",
-desc:"Frango com quinoa saudável"
+desc:"Frango com quinoa saudável",
+fav:false
 },
-
-{
-nome:"Wrap de Frango Fit",
-preco:7.8,
-cat:"frango",
-img:"https://images.unsplash.com/photo-1552332386-f8dd00dc2f85?auto=format&fit=crop&w=800&q=80",
-desc:"Wrap saudável de frango"
-},
-
 {
 nome:"Salmão Premium",
 preco:11,
 cat:"peixe",
 img:"https://images.unsplash.com/photo-1467003909585-2f8a72700288?auto=format&fit=crop&w=800&q=80",
-desc:"Salmão grelhado premium"
+desc:"Salmão grelhado premium",
+fav:false
 },
-
 {
 nome:"Salada Proteica",
 preco:7,
 cat:"veg",
 img:"https://images.unsplash.com/photo-1540189549336-e6e99c3679fe?auto=format&fit=crop&w=800&q=80",
-desc:"Salada saudável rica em proteína"
+desc:"Salada saudável rica em proteína",
+fav:false
 },
-
 {
 nome:"Omelete Fit",
 preco:6.5,
 cat:"low",
 img:"https://images.unsplash.com/photo-1525351484163-7529414344d8?auto=format&fit=crop&w=800&q=80",
-desc:"Ovos com espinafre"
-},
-
-{
-nome:"Bowl de Atum Fit",
-preco:9,
-cat:"peixe",
-img:"https://images.unsplash.com/photo-1559847844-5315695dadae?auto=format&fit=crop&w=800&q=80",
-desc:"Atum com arroz e legumes"
-},
-
-{
-nome:"Bowl Vegetariano",
-preco:7.5,
-cat:"veg",
-img:"https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&w=800&q=80",
-desc:"Quinoa e legumes frescos"
-},
-
-{
-nome:"Frango Grelhado Simples",
-preco:8,
-cat:"frango",
-img:"https://images.unsplash.com/photo-1562967916-eb82221dfb92?auto=format&fit=crop&w=800&q=80",
-desc:"Frango grelhado saudável"
+desc:"Ovos com espinafre",
+fav:false
 }
 ];
 
@@ -270,13 +327,13 @@ const search=document.querySelector("input").value.toLowerCase();
 menu.innerHTML="";
 
 foods
-.filter(f=>filtro==="all"||f.cat===filtro)
 .filter(f=>f.nome.toLowerCase().includes(search))
-.forEach(f=>{
+.forEach((f,i)=>{
 menu.innerHTML+=`
 <div class="card">
 <img src="${f.img}">
 <div class="content">
+
 <div class="title">${f.nome}</div>
 <div class="price">€${f.preco}</div>
 
@@ -284,6 +341,11 @@ menu.innerHTML+=`
 <div class="details">${f.desc}</div>
 
 <button class="add-btn" onclick="add('${f.nome}',${f.preco})">Adicionar</button>
+
+<button class="fav-btn" onclick="fav(${i})">
+${f.fav?"❤️ Favorito":"🤍 Favoritar"}
+</button>
+
 </div>
 </div>`;
 });
@@ -294,17 +356,12 @@ const d=btn.nextElementSibling;
 d.style.display=d.style.display==="block"?"none":"block";
 }
 
+/* CART */
 function add(nome,preco){
 carrinho.push(preco);
 
 const li=document.createElement("li");
 li.textContent=nome+" €"+preco;
-
-li.onclick=()=>{
-li.remove();
-carrinho.splice(carrinho.indexOf(preco),1);
-updateTotal();
-};
 
 document.getElementById("cart").appendChild(li);
 updateTotal();
@@ -313,13 +370,7 @@ updateTotal();
 function updateTotal(){
 const total=carrinho.reduce((a,b)=>a+b,0);
 document.getElementById("total").textContent=total.toFixed(2);
-}
-
-function setFilter(cat,el){
-filtro=cat;
-document.querySelectorAll(".cat").forEach(c=>c.classList.remove("active"));
-el.classList.add("active");
-render();
+document.getElementById("badge").textContent=carrinho.length;
 }
 
 function toggleCart(){
@@ -332,8 +383,26 @@ document.getElementById("cartBox").classList.remove("open");
 document.getElementById("overlay").classList.remove("show");
 }
 
-function checkout(){
-alert("Pedido confirmado! Entregamos em Braga, Porto e Guimarães 🚚");
+/* FAVORITOS */
+function fav(i){
+foods[i].fav=!foods[i].fav;
+render();
+}
+
+/* CHECKOUT */
+function openCheckout(){
+document.getElementById("checkoutPage").style.display="block";
+}
+
+function confirmOrder(){
+document.getElementById("checkoutPage").style.display="none";
+document.getElementById("cartBox").classList.remove("open");
+
+document.getElementById("confirmed").style.display="flex";
+
+carrinho=[];
+document.getElementById("cart").innerHTML="";
+updateTotal();
 }
 
 render();
