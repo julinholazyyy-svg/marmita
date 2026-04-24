@@ -52,7 +52,7 @@ cursor:pointer;
 width:100%;
 }
 
-/* SITE */
+/* HEADER */
 header{
 display:flex;
 justify-content:space-between;
@@ -221,7 +221,7 @@ text-align:center;
 margin-top:10px;
 }
 
-/* CONFIRMED */
+/* CONFIRM */
 .confirmed{
 position:fixed;
 top:0;
@@ -333,7 +333,6 @@ let carrinho=[];
 
 /* LOGIN */
 function enterSite(){
-
 const name=document.getElementById("userName").value;
 const age=document.getElementById("age").value;
 const city=document.getElementById("cityLogin").value;
@@ -346,16 +345,24 @@ return;
 document.getElementById("login").style.display="none";
 }
 
-/* MENU */
+/* FOOD */
 const foods=[
-{nome:"Frango + Quinoa Fit",preco:9,img:"https://images.unsplash.com/photo-1512621776951-a57141f2eefd?auto=format&fit=crop&w=800&q=80",desc:"Frango com quinoa",fav:false},
+{nome:"Frango + Quinoa Fit",preco:9,img:"https://images.unsplash.com/photo-1512621776951-a57141f2eefd?auto=format&fit=crop&w=800&q=80",desc:"Frango com quinoa saudável",fav:false},
 {nome:"Salmão Premium",preco:11,img:"https://images.unsplash.com/photo-1467003909585-2f8a72700288?auto=format&fit=crop&w=800&q=80",desc:"Salmão grelhado",fav:false},
-{nome:"Salada Proteica",preco:7,img:"https://images.unsplash.com/photo-1540189549336-e6e99c3679fe?auto=format&fit=crop&w=800&q=80",desc:"Salada saudável",fav:false}
+{nome:"Salada Proteica",preco:7,img:"https://images.unsplash.com/photo-1540189549336-e6e99c3679fe?auto=format&fit=crop&w=800&q=80",desc:"Salada saudável",fav:false},
+{nome:"Omelete Fit",preco:6.5,img:"https://images.unsplash.com/photo-1525351484163-7529414344d8?auto=format&fit=crop&w=800&q=80",desc:"Ovos com espinafre",fav:false},
+{nome:"Frango Grelhado",preco:8,img:"https://images.unsplash.com/photo-1562967916-eb82221dfb92?auto=format&fit=crop&w=800&q=80",desc:"Frango simples",fav:false},
+{nome:"Bowl Atum Fit",preco:9,img:"https://images.unsplash.com/photo-1559847844-5315695dadae?auto=format&fit=crop&w=800&q=80",desc:"Atum e arroz",fav:false},
+{nome:"Wrap Frango",preco:7.8,img:"https://images.unsplash.com/photo-1552332386-f8dd00dc2f85?auto=format&fit=crop&w=800&q=80",desc:"Wrap saudável",fav:false},
+{nome:"Vegetariano Bowl",preco:7.5,img:"https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&w=800&q=80",desc:"Quinoa e legumes",fav:false},
+{nome:"Carne Magra",preco:10,img:"https://images.unsplash.com/photo-1604908177522-40e7e9d8c5d6?auto=format&fit=crop&w=800&q=80",desc:"Carne e arroz",fav:false},
+{nome:"Detox Bowl",preco:8,img:"https://images.unsplash.com/photo-1551024506-0bccd828d307?auto=format&fit=crop&w=800&q=80",desc:"Refeição leve",fav:false}
 ];
 
+/* RENDER */
 function render(){
 const menu=document.getElementById("menu");
-const search=document.querySelector(".search input").value.toLowerCase();
+const search=document.querySelector("input").value.toLowerCase();
 menu.innerHTML="";
 
 foods.filter(f=>f.nome.toLowerCase().includes(search))
@@ -373,11 +380,22 @@ menu.innerHTML+=`
 
 <button class="add-btn" onclick="add('${f.nome}',${f.preco})">Adicionar</button>
 
+<button class="fav-btn" onclick="fav(${i})">
+${f.fav?"❤️ Favorito":"🤍 Favoritar"}
+</button>
+
 </div>
 </div>`;
 });
 }
 
+/* FAVORITO */
+function fav(i){
+foods[i].fav=!foods[i].fav;
+render();
+}
+
+/* DETAILS */
 function toggle(btn){
 const d=btn.nextElementSibling;
 d.style.display=d.style.display==="block"?"none":"block";
@@ -393,7 +411,6 @@ updateTotal();
 function updateTotal(){
 document.getElementById("total").innerText=
 carrinho.reduce((a,b)=>a+b,0).toFixed(2);
-
 document.getElementById("badge").innerText=carrinho.length;
 }
 
@@ -438,4 +455,3 @@ render();
 
 </body>
 </html>
-
