@@ -10,50 +10,37 @@ body {
     font-family: 'Inter', sans-serif;
     background: #0f1115;
     color: white;
-    display: flex;
-}
-
-/* SIDEBAR */
-.cart {
-    width: 300px;
-    background: #1a1d23;
-    height: 100vh;
-    padding: 20px;
-    position: fixed;
-    right: 0;
-    top: 0;
-    border-left: 1px solid #2a2d35;
-}
-
-.cart h2 {
-    margin-top: 0;
-}
-
-.cart ul {
-    padding-left: 18px;
-    color: #ccc;
-}
-
-/* MAIN */
-.main {
-    flex: 1;
-    padding-right: 320px;
 }
 
 /* HEADER */
 header {
     padding: 20px 30px;
-    font-size: 24px;
+    font-size: 26px;
     font-weight: bold;
     border-bottom: 1px solid #2a2d35;
+}
+
+/* CATEGORIAS */
+.categories {
+    display: flex;
+    gap: 10px;
+    padding: 15px 25px;
+}
+
+.cat {
+    background: #1a1d23;
+    padding: 8px 15px;
+    border-radius: 20px;
+    cursor: pointer;
+    border: 1px solid #2a2d35;
 }
 
 /* GRID */
 .container {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
     gap: 20px;
-    padding: 25px;
+    padding: 20px;
 }
 
 /* CARD */
@@ -61,18 +48,18 @@ header {
     background: #1a1d23;
     border-radius: 15px;
     overflow: hidden;
-    transition: 0.2s;
     border: 1px solid #2a2d35;
+    transition: 0.2s;
 }
 
 .card:hover {
-    transform: scale(1.02);
+    transform: scale(1.03);
 }
 
 /* IMAGE */
 .card img {
     width: 100%;
-    height: 180px;
+    height: 170px;
     object-fit: cover;
 }
 
@@ -82,14 +69,14 @@ header {
 }
 
 .title {
-    font-size: 17px;
+    font-size: 16px;
     font-weight: 600;
 }
 
 .price {
     color: #2ecc71;
     font-weight: bold;
-    margin: 6px 0;
+    margin: 5px 0;
 }
 
 /* BUTTONS */
@@ -98,9 +85,8 @@ header {
     padding: 10px;
     border-radius: 8px;
     border: none;
-    cursor: pointer;
     margin-top: 8px;
-    font-weight: 600;
+    cursor: pointer;
 }
 
 .details-btn {
@@ -116,82 +102,123 @@ header {
 /* DETAILS */
 .details {
     display: none;
-    font-size: 14px;
+    font-size: 13px;
     color: #aaa;
-    margin-top: 8px;
+}
+
+/* CART */
+.cart {
+    position: fixed;
+    right: 0;
+    top: 0;
+    width: 280px;
+    height: 100%;
+    background: #1a1d23;
+    padding: 20px;
+    border-left: 1px solid #2a2d35;
+}
+
+.cart ul {
+    padding-left: 18px;
 }
 </style>
 
 </head>
 <body>
 
-<div class="main">
+<header>🍱 Risilio</header>
 
-<header>
-🍱 Risilio
-</header>
+<div class="categories">
+    <div class="cat">Frango</div>
+    <div class="cat">Peixe</div>
+    <div class="cat">Vegetariano</div>
+    <div class="cat">Low Carb</div>
+</div>
 
 <div class="container">
 
-<!-- CARD 1 -->
+<!-- VÁRIAS MARMITAS -->
+
 <div class="card">
-    <img src="https://images.unsplash.com/photo-1604908176997-43194b3c8f74">
-    <div class="content">
-        <div class="title">Frango + Batata Doce</div>
-        <div class="price">€8.50</div>
-
-        <button class="btn details-btn" onclick="toggleDetails(this)">
-            Ver detalhes
-        </button>
-
-        <div class="details">
-            Frango grelhado, batata doce, brócolos
-        </div>
-
-        <button class="btn add-btn" onclick="addToCart('Frango + Batata Doce')">
-            Adicionar
-        </button>
-    </div>
+<img src="https://images.unsplash.com/photo-1604908176997-43194b3c8f74">
+<div class="content">
+<div class="title">Frango + Batata Doce</div>
+<div class="price">€8.50</div>
+<button class="btn details-btn" onclick="toggleDetails(this)">Ver detalhes</button>
+<div class="details">Frango grelhado, batata doce, brócolos</div>
+<button class="btn add-btn" onclick="addToCart('Frango + Batata Doce')">Adicionar</button>
+</div>
 </div>
 
-<!-- CARD 2 -->
 <div class="card">
-    <img src="https://images.unsplash.com/photo-1546069901-ba9599a7e63c">
-    <div class="content">
-        <div class="title">Salmão + Arroz Integral</div>
-        <div class="price">€10.00</div>
+<img src="https://images.unsplash.com/photo-1546069901-ba9599a7e63c">
+<div class="content">
+<div class="title">Salmão + Arroz Integral</div>
+<div class="price">€10.00</div>
+<button class="btn details-btn" onclick="toggleDetails(this)">Ver detalhes</button>
+<div class="details">Salmão, arroz integral, legumes</div>
+<button class="btn add-btn" onclick="addToCart('Salmão + Arroz Integral')">Adicionar</button>
+</div>
+</div>
 
-        <button class="btn details-btn" onclick="toggleDetails(this)">
-            Ver detalhes
-        </button>
+<div class="card">
+<img src="https://images.unsplash.com/photo-1512621776951-a57141f2eefd">
+<div class="content">
+<div class="title">Vegetariano Bowl</div>
+<div class="price">€7.50</div>
+<button class="btn details-btn" onclick="toggleDetails(this)">Ver detalhes</button>
+<div class="details">Quinoa, legumes, grão</div>
+<button class="btn add-btn" onclick="addToCart('Vegetariano Bowl')">Adicionar</button>
+</div>
+</div>
 
-        <div class="details">
-            Salmão grelhado, arroz integral, legumes
-        </div>
+<div class="card">
+<img src="https://images.unsplash.com/photo-1504674900247-0877df9cc836">
+<div class="content">
+<div class="title">Carne + Arroz + Legumes</div>
+<div class="price">€9.00</div>
+<button class="btn details-btn" onclick="toggleDetails(this)">Ver detalhes</button>
+<div class="details">Carne magra, arroz, legumes</div>
+<button class="btn add-btn" onclick="addToCart('Carne + Arroz')">Adicionar</button>
+</div>
+</div>
 
-        <button class="btn add-btn" onclick="addToCart('Salmão + Arroz Integral')">
-            Adicionar
-        </button>
-    </div>
+<div class="card">
+<img src="https://images.unsplash.com/photo-1490645935967-10de6ba17061">
+<div class="content">
+<div class="title">Omelete Fitness</div>
+<div class="price">€6.50</div>
+<button class="btn details-btn" onclick="toggleDetails(this)">Ver detalhes</button>
+<div class="details">Ovos, espinafre, queijo light</div>
+<button class="btn add-btn" onclick="addToCart('Omelete Fitness')">Adicionar</button>
+</div>
+</div>
+
+<div class="card">
+<img src="https://images.unsplash.com/photo-1478145046317-39f10e56b5e9">
+<div class="content">
+<div class="title">Frango Low Carb</div>
+<div class="price">€8.00</div>
+<button class="btn details-btn" onclick="toggleDetails(this)">Ver detalhes</button>
+<div class="details">Frango, legumes, zero arroz</div>
+<button class="btn add-btn" onclick="addToCart('Frango Low Carb')">Adicionar</button>
+</div>
 </div>
 
 </div>
 
-</div>
-
-<!-- CARRINHO -->
 <div class="cart">
-    <h2>🛒 Carrinho</h2>
-    <ul id="cart-list"></ul>
+<h2>🛒 Carrinho</h2>
+<ul id="cart-list"></ul>
 </div>
 
 <script>
-function toggleDetails(btn) {
-    const details = btn.nextElementSibling;
-    details.style.display = details.style.display === "block" ? "none" : "block";
+function toggleDetails(btn){
+    const d = btn.nextElementSibling;
+    d.style.display = d.style.display === "block" ? "none" : "block";
 }
 
-function addToCart(item) {
+function addToCart(item){
     const list = document.getElementById("cart-list");
     const li = document.createElement("li");
     li.textContent = item;
