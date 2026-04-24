@@ -221,7 +221,7 @@ text-align:center;
 margin-top:10px;
 }
 
-/* CONFIRM */
+/* CONFIRMADO */
 .confirmed{
 position:fixed;
 top:0;
@@ -345,7 +345,7 @@ return;
 document.getElementById("login").style.display="none";
 }
 
-/* FOOD */
+/* MENU ATUALIZADO (SEM DETOX E CARNE MAGRA) */
 const foods=[
 {nome:"Frango + Quinoa Fit",preco:9,img:"https://images.unsplash.com/photo-1512621776951-a57141f2eefd?auto=format&fit=crop&w=800&q=80",desc:"Frango com quinoa saudável",fav:false},
 {nome:"Salmão Premium",preco:11,img:"https://images.unsplash.com/photo-1467003909585-2f8a72700288?auto=format&fit=crop&w=800&q=80",desc:"Salmão grelhado",fav:false},
@@ -354,12 +354,10 @@ const foods=[
 {nome:"Frango Grelhado",preco:8,img:"https://images.unsplash.com/photo-1562967916-eb82221dfb92?auto=format&fit=crop&w=800&q=80",desc:"Frango simples",fav:false},
 {nome:"Bowl Atum Fit",preco:9,img:"https://images.unsplash.com/photo-1559847844-5315695dadae?auto=format&fit=crop&w=800&q=80",desc:"Atum e arroz",fav:false},
 {nome:"Wrap Frango",preco:7.8,img:"https://images.unsplash.com/photo-1552332386-f8dd00dc2f85?auto=format&fit=crop&w=800&q=80",desc:"Wrap saudável",fav:false},
-{nome:"Vegetariano Bowl",preco:7.5,img:"https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&w=800&q=80",desc:"Quinoa e legumes",fav:false},
-{nome:"Carne Magra",preco:10,img:"https://images.unsplash.com/photo-1604908177522-40e7e9d8c5d6?auto=format&fit=crop&w=800&q=80",desc:"Carne e arroz",fav:false},
-{nome:"Detox Bowl",preco:8,img:"https://images.unsplash.com/photo-1551024506-0bccd828d307?auto=format&fit=crop&w=800&q=80",desc:"Refeição leve",fav:false}
+{nome:"Vegetariano Bowl",preco:7.5,img:"https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&w=800&q=80",desc:"Quinoa e legumes",fav:false}
 ];
 
-/* RENDER */
+/* RESTO DO SISTEMA MANTIDO IGUAL */
 function render(){
 const menu=document.getElementById("menu");
 const search=document.querySelector("input").value.toLowerCase();
@@ -389,19 +387,16 @@ ${f.fav?"❤️ Favorito":"🤍 Favoritar"}
 });
 }
 
-/* FAVORITO */
 function fav(i){
 foods[i].fav=!foods[i].fav;
 render();
 }
 
-/* DETAILS */
 function toggle(btn){
 const d=btn.nextElementSibling;
 d.style.display=d.style.display==="block"?"none":"block";
 }
 
-/* CART */
 function add(nome,preco){
 carrinho.push(preco);
 document.getElementById("cart").innerHTML+=`<li>${nome} €${preco}</li>`;
@@ -424,7 +419,6 @@ document.getElementById("cartBox").classList.remove("open");
 document.getElementById("overlay").classList.remove("show");
 }
 
-/* CHECKOUT */
 function openCheckout(){
 document.getElementById("checkoutPage").style.display="block";
 }
