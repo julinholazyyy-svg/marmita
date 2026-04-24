@@ -14,12 +14,33 @@ body {
 
 /* HEADER */
 header {
-    padding: 20px;
-    font-size: 26px;
-    font-weight: bold;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 20px;
 }
 
-/* CATEGORIAS */
+.cart-btn {
+    background: #2ecc71;
+    padding: 8px 15px;
+    border-radius: 20px;
+    cursor: pointer;
+    color: black;
+}
+
+/* SEARCH */
+.search {
+    padding: 0 20px 10px;
+}
+
+.search input {
+    width: 100%;
+    padding: 10px;
+    border-radius: 10px;
+    border: none;
+}
+
+/* CATEGORIES */
 .categories {
     display: flex;
     gap: 10px;
@@ -67,7 +88,6 @@ header {
     color: #2ecc71;
 }
 
-/* BUTTON */
 button {
     width: 100%;
     margin-top: 5px;
@@ -82,29 +102,36 @@ button {
 
 .details {
     display: none;
-    font-size: 13px;
 }
 
-/* CART */
+/* CART SIDEBAR */
 .cart {
     position: fixed;
-    right: 0;
+    right: -300px;
     top: 0;
-    width: 260px;
+    width: 300px;
     height: 100%;
     background: #1a1d23;
     padding: 15px;
+    transition: 0.3s;
 }
 
-.cart li {
-    margin-bottom: 5px;
+.cart.open {
+    right: 0;
 }
 </style>
 </head>
 
 <body>
 
-<header>🍱 Risilio</header>
+<header>
+    🍱 Risilio
+    <div class="cart-btn" onclick="toggleCart()">🛒 Carrinho</div>
+</header>
+
+<div class="search">
+    <input type="text" placeholder="Procurar marmita..." oninput="searchFood(this.value)">
+</div>
 
 <div class="categories">
     <div class="cat active" onclick="filter('all', this)">Todos</div>
@@ -116,7 +143,8 @@ button {
 
 <div class="container" id="menu"></div>
 
-<div class="cart">
+<!-- CARRINHO -->
+<div class="cart" id="cartBox">
 <h3>🛒 Carrinho</h3>
 <ul id="cart"></ul>
 <p>Total: €<span id="total">0</span></p>
@@ -126,23 +154,24 @@ button {
 const foods = [
 {nome:"Frango + Batata Doce",preco:8.5,cat:"frango",img:"https://images.unsplash.com/photo-1604908176997-43194b3c8f74",desc:"Frango, batata doce"},
 {nome:"Frango Low Carb",preco:8,cat:"frango",img:"https://images.unsplash.com/photo-1478145046317-39f10e56b5e9",desc:"Frango e legumes"},
-{nome:"Frango + Arroz",preco:9,cat:"frango",img:"https://images.unsplash.com/photo-1504674900247-0877df9cc836",desc:"Frango e arroz"},
 {nome:"Salmão Fit",preco:10,cat:"peixe",img:"https://images.unsplash.com/photo-1546069901-ba9599a7e63c",desc:"Salmão e arroz"},
 {nome:"Atum Bowl",preco:9,cat:"peixe",img:"https://images.unsplash.com/photo-1512621776951-a57141f2eefd",desc:"Atum e legumes"},
 {nome:"Vegetariano Bowl",preco:7.5,cat:"veg",img:"https://images.unsplash.com/photo-1512621776951-a57141f2eefd",desc:"Quinoa e legumes"},
-{nome:"Omelete Fit",preco:6.5,cat:"low",img:"https://images.unsplash.com/photo-1490645935967-10de6ba17061",desc:"Ovos e espinafre"},
-{nome:"Carne + Legumes",preco:9.5,cat:"low",img:"https://images.unsplash.com/photo-1504674900247-0877df9cc836",desc:"Carne magra"},
-{nome:"Frango + Quinoa",preco:8.8,cat:"frango",img:"https://images.unsplash.com/photo-1604908176997-43194b3c8f74",desc:"Frango e quinoa"}
+{nome:"Omelete Fit",preco:6.5,cat:"low",img:"https://images.unsplash.com/photo-1490645935967-10de6ba17061",desc:"Ovos e espinafre"}
 ];
 
 let carrinho = [];
+let filtroAtual = "all";
 
-function render(filter="all"){
+function render(){
     const menu = document.getElementById("menu");
     menu.innerHTML="";
 
+    const search = document.querySelector("input").value.toLowerCase();
+
     foods
-    .filter(f => filter==="all" || f.cat===filter)
+    .filter(f => (filtroAtual==="all" || f.cat===filtroAtual))
+    .filter(f => f.nome.toLowerCase().includes(search))
     .forEach(f => {
         menu.innerHTML += `
         <div class="card">
@@ -187,9 +216,18 @@ function updateTotal(){
 }
 
 function filter(cat, el){
+    filtroAtual = cat;
     document.querySelectorAll(".cat").forEach(c=>c.classList.remove("active"));
     el.classList.add("active");
-    render(cat);
+    render();
+}
+
+function searchFood(){
+    render();
+}
+
+function toggleCart(){
+    document.getElementById("cartBox").classList.toggle("open");
 }
 
 render();
