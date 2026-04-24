@@ -31,7 +31,6 @@ color:black;
 position:relative;
 }
 
-/* badge carrinho */
 .badge{
 position:absolute;
 top:-5px;
@@ -47,14 +46,13 @@ align-items:center;
 justify-content:center;
 }
 
-/* delivery */
+/* INFO */
 .delivery{
 padding:10px 20px;
 color:#aaa;
 font-size:14px;
 }
 
-/* search */
 .search{
 padding:10px 20px;
 }
@@ -66,7 +64,7 @@ border-radius:10px;
 border:none;
 }
 
-/* cards */
+/* GRID */
 .container{
 display:grid;
 grid-template-columns:repeat(auto-fill,minmax(260px,1fr));
@@ -79,16 +77,10 @@ background:#1a1d23;
 border-radius:15px;
 overflow:hidden;
 transition:0.3s;
-animation:fadeIn 0.4s ease;
 }
 
 .card:hover{
 transform:scale(1.02);
-}
-
-@keyframes fadeIn{
-from{opacity:0;transform:translateY(10px)}
-to{opacity:1;transform:translateY(0)}
 }
 
 .card img{
@@ -121,12 +113,11 @@ border-radius:8px;
 cursor:pointer;
 }
 
-/* buttons */
 .details-btn{background:#2a2d35;color:white}
 .add-btn{background:#2ecc71;color:black}
 .fav-btn{background:#ff4d6d;color:white}
 
-/* details */
+/* DETAILS */
 .details{
 display:none;
 font-size:13px;
@@ -148,7 +139,7 @@ z-index:1000;
 
 .cart.open{right:0}
 
-/* overlay */
+/* OVERLAY */
 .overlay{
 position:fixed;
 top:0;
@@ -162,19 +153,7 @@ z-index:999;
 
 .overlay.show{display:block}
 
-/* checkout */
-.checkout{
-background:#2ecc71;
-color:black;
-padding:10px;
-border-radius:8px;
-text-align:center;
-margin-top:10px;
-cursor:pointer;
-font-weight:bold;
-}
-
-/* checkout page */
+/* CHECKOUT */
 .checkoutPage{
 position:fixed;
 top:0;
@@ -205,7 +184,7 @@ text-align:center;
 margin-top:10px;
 }
 
-/* confirmed page */
+/* CONFIRMED */
 .confirmed{
 position:fixed;
 top:0;
@@ -231,7 +210,6 @@ color:#2ecc71;
 
 <header>
 🍱 Risilio
-
 <div class="cart-btn" onclick="toggleCart()">
 🛒
 <span class="badge" id="badge">0</span>
@@ -314,6 +292,54 @@ preco:6.5,
 cat:"low",
 img:"https://images.unsplash.com/photo-1525351484163-7529414344d8?auto=format&fit=crop&w=800&q=80",
 desc:"Ovos com espinafre",
+fav:false
+},
+{
+nome:"Frango Grelhado",
+preco:8,
+cat:"frango",
+img:"https://images.unsplash.com/photo-1562967916-eb82221dfb92?auto=format&fit=crop&w=800&q=80",
+desc:"Frango grelhado simples",
+fav:false
+},
+{
+nome:"Bowl de Atum Fit",
+preco:9,
+cat:"peixe",
+img:"https://images.unsplash.com/photo-1559847844-5315695dadae?auto=format&fit=crop&w=800&q=80",
+desc:"Atum com arroz e legumes",
+fav:false
+},
+{
+nome:"Wrap de Frango",
+preco:7.8,
+cat:"frango",
+img:"https://images.unsplash.com/photo-1552332386-f8dd00dc2f85?auto=format&fit=crop&w=800&q=80",
+desc:"Wrap saudável de frango",
+fav:false
+},
+{
+nome:"Bowl Vegetariano",
+preco:7.5,
+cat:"veg",
+img:"https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&w=800&q=80",
+desc:"Quinoa e legumes frescos",
+fav:false
+},
+{
+nome:"Frango Teriyaki",
+preco:9.2,
+cat:"frango",
+img:"https://images.unsplash.com/photo-1604908554027-2f9b2b2d2c5a?auto=format&fit=crop&w=800&q=80",
+desc:"Frango com molho teriyaki",
+fav:false
+},
+{
+nome:"Carne + Legumes",
+preco:9.5,
+cat:"low",
+img:"https://images.unsplash.com/photo-1604908177522-40e7e9d8c5d6?auto=format&fit=crop&w=800&q=80",
+desc:"Carne magra com legumes",
 fav:false
 }
 ];
