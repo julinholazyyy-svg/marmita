@@ -5,133 +5,108 @@
 <title>Risilio</title>
 
 <style>
-body {
-    margin: 0;
-    font-family: Arial;
-    background: #0f1115;
-    color: white;
+body{
+    margin:0;
+    font-family:Arial;
+    background:#0f1115;
+    color:white;
 }
 
 /* HEADER */
-header {
-    display: flex;
-    justify-content: space-between;
-    padding: 15px 20px;
-    font-size: 22px;
-    font-weight: bold;
+header{
+    display:flex;
+    justify-content:space-between;
+    padding:15px 20px;
+    font-size:22px;
+    font-weight:bold;
 }
 
-/* CART BUTTON */
-.cart-btn {
-    background: #2ecc71;
-    padding: 8px 15px;
-    border-radius: 20px;
-    cursor: pointer;
-    color: black;
+.cart-btn{
+    background:#2ecc71;
+    padding:8px 15px;
+    border-radius:20px;
+    cursor:pointer;
+    color:black;
 }
 
 /* SEARCH */
-.search {
-    padding: 10px 20px;
-}
-
-.search input {
-    width: 100%;
-    padding: 10px;
-    border-radius: 10px;
-    border: none;
+.search{padding:10px 20px;}
+.search input{
+    width:100%;
+    padding:10px;
+    border-radius:10px;
+    border:none;
 }
 
 /* CATEGORIES */
-.categories {
-    display: flex;
-    gap: 10px;
-    padding: 10px 20px;
+.categories{
+    display:flex;
+    gap:10px;
+    padding:10px 20px;
 }
-
-.cat {
-    background: #1a1d23;
-    padding: 8px 15px;
-    border-radius: 20px;
-    cursor: pointer;
+.cat{
+    background:#1a1d23;
+    padding:8px 15px;
+    border-radius:20px;
+    cursor:pointer;
 }
-
-.cat.active {
-    background: #2ecc71;
-    color: black;
-}
+.cat.active{background:#2ecc71;color:black}
 
 /* GRID */
-.container {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-    gap: 20px;
-    padding: 20px;
+.container{
+    display:grid;
+    grid-template-columns:repeat(auto-fill,minmax(260px,1fr));
+    gap:20px;
+    padding:20px;
 }
 
 /* CARD */
-.card {
-    background: #1a1d23;
-    border-radius: 15px;
-    overflow: hidden;
+.card{
+    background:#1a1d23;
+    border-radius:15px;
+    overflow:hidden;
 }
 
-.card img {
-    width: 100%;
-    height: 170px;
-    object-fit: cover;
+.card img{
+    width:100%;
+    height:170px;
+    object-fit:cover;
 }
 
-.content {
-    padding: 12px;
+.content{padding:12px}
+
+.title{font-size:17px;font-weight:bold}
+.price{color:#2ecc71;font-weight:bold;margin-top:5px}
+
+button{
+    width:100%;
+    margin-top:6px;
+    padding:9px;
+    border:none;
+    border-radius:8px;
+    cursor:pointer;
+}
+.details-btn{background:#2a2d35;color:white}
+.add-btn{background:#2ecc71;color:black}
+
+.details{display:none;font-size:13px;color:#aaa}
+
+/* CART FIX REAL */
+.cart{
+    position:fixed;
+    right:-320px;
+    top:0;
+    width:280px;
+    height:100%;
+    background:#1a1d23;
+    padding:15px;
+    transition:0.3s;
+    z-index:999;
+    box-shadow:-10px 0 30px rgba(0,0,0,0.5);
 }
 
-.title {
-    font-size: 17px;
-    font-weight: bold;
-}
-
-.price {
-    color: #2ecc71;
-    font-weight: bold;
-    margin-top: 5px;
-}
-
-/* BUTTONS */
-button {
-    width: 100%;
-    margin-top: 6px;
-    padding: 9px;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-}
-
-.details-btn { background: #2a2d35; color: white; }
-.add-btn { background: #2ecc71; color: black; }
-
-.details {
-    display: none;
-    font-size: 13px;
-    color: #aaa;
-}
-
-/* CART FIX (AGORA REALMENTE ESCONDIDO) */
-.cart {
-    position: fixed;
-    right: -320px;   /* FORÇA esconder */
-    top: 0;
-    width: 280px;
-    height: 100%;
-    background: #1a1d23;
-    padding: 15px;
-    transition: 0.3s;
-    box-shadow: -10px 0 30px rgba(0,0,0,0.5);
-    z-index: 999;
-}
-
-.cart.open {
-    right: 0;
+.cart.open{
+    right:0;
 }
 </style>
 </head>
@@ -144,15 +119,15 @@ button {
 </header>
 
 <div class="search">
-<input type="text" placeholder="Procurar marmita..." oninput="render()">
+<input type="text" placeholder="Procurar..." oninput="render()">
 </div>
 
 <div class="categories">
-<div class="cat active" onclick="setFilter('all', this)">Todos</div>
-<div class="cat" onclick="setFilter('frango', this)">Frango</div>
-<div class="cat" onclick="setFilter('peixe', this)">Peixe</div>
-<div class="cat" onclick="setFilter('veg', this)">Vegetariano</div>
-<div class="cat" onclick="setFilter('low', this)">Low Carb</div>
+<div class="cat active" onclick="setFilter('all',this)">Todos</div>
+<div class="cat" onclick="setFilter('frango',this)">Frango</div>
+<div class="cat" onclick="setFilter('peixe',this)">Peixe</div>
+<div class="cat" onclick="setFilter('veg',this)">Vegetariano</div>
+<div class="cat" onclick="setFilter('low',this)">Low Carb</div>
 </div>
 
 <div class="container" id="menu"></div>
@@ -167,85 +142,158 @@ button {
 <script>
 
 const foods = [
-{nome:"Frango + Batata Doce",preco:8.5,cat:"frango",img:"https://images.unsplash.com/photo-1604908176997-43194b3c8f74",desc:"Frango grelhado com batata doce"},
-{nome:"Frango + Quinoa Fit",preco:9,cat:"frango",img:"https://images.unsplash.com/photo-1512621776951-a57141f2eefd",desc:"Frango com quinoa saudável"},
-{nome:"Frango Grelhado + Arroz",preco:9,cat:"frango",img:"https://images.unsplash.com/photo-1504674900247-0877df9cc836",desc:"Frango e arroz integral"},
-{nome:"Wrap de Frango",preco:7.8,cat:"frango",img:"https://images.unsplash.com/photo-1552332386-f8dd00dc2f85",desc:"Wrap saudável de frango"},
+{
+nome:"Frango + Batata Doce",
+preco:8.5,
+cat:"frango",
+img:"https://images.unsplash.com/photo-1604908176997-43194b3c8f74",
+desc:"Frango grelhado com batata doce"
+},
 
-{nome:"Salmão Premium",preco:11,cat:"peixe",img:"https://images.unsplash.com/photo-1546069901-ba9599a7e63c",desc:"Salmão grelhado"},
-{nome:"Atum Bowl",preco:9,cat:"peixe",img:"https://images.unsplash.com/photo-1512621776951-a57141f2eefd",desc:"Atum fresco com legumes"},
-{nome:"Tilápia Fit",preco:9.5,cat:"peixe",img:"https://images.unsplash.com/photo-1490645935967-10de6ba17061",desc:"Tilápia saudável"},
+{
+nome:"Frango + Quinoa Fit",
+preco:9,
+cat:"frango",
+img:"https://images.unsplash.com/photo-1512621776951-a57141f2eefd",
+desc:"Frango com quinoa saudável"
+},
 
-{nome:"Bowl Vegetariano",preco:7.5,cat:"veg",img:"https://images.unsplash.com/photo-1498837167922-ddd27525d352",desc:"Quinoa e legumes"},
-{nome:"Salada Proteica",preco:7,cat:"veg",img:"https://images.unsplash.com/photo-1505575972945-2807a2f1c7f8",desc:"Salada rica em proteína"},
+{
+nome:"Frango Grelhado + Arroz",
+preco:9,
+cat:"frango",
+img:"https://images.unsplash.com/photo-1504674900247-0877df9cc836",
+desc:"Frango e arroz integral"
+},
 
-{nome:"Omelete Fit",preco:6.5,cat:"low",img:"https://images.unsplash.com/photo-1490645935967-10de6ba17061",desc:"Ovos e espinafre"},
-{nome:"Carne + Legumes",preco:9.5,cat:"low",img:"https://images.unsplash.com/photo-1504674900247-0877df9cc836",desc:"Carne magra saudável"},
+{
+nome:"Salmão Premium",
+preco:11,
+cat:"peixe",
+img:"https://images.unsplash.com/photo-1546069901-ba9599a7e63c",
+desc:"Salmão grelhado"
+},
+
+{
+nome:"Atum Bowl",
+preco:9,
+cat:"peixe",
+img:"https://images.unsplash.com/photo-1512621776951-a57141f2eefd",
+desc:"Atum fresco"
+},
+
+{
+nome:"Tilápia Fit",
+preco:9.5,
+cat:"peixe",
+img:"https://images.unsplash.com/photo-1490645935967-10de6ba17061",
+desc:"Tilápia saudável"
+},
+
+{
+nome:"Vegetariano Bowl",
+preco:7.5,
+cat:"veg",
+img:"https://images.unsplash.com/photo-1540189549336-e6e99c3679fe",
+desc:"Quinoa e legumes"
+},
+
+{
+nome:"🥗 Salada Proteica (CORRIGIDA)",
+preco:7,
+cat:"veg",
+img:"https://images.unsplash.com/photo-1540420773420-3366772f4999",
+desc:"Salada com proteína e legumes frescos"
+},
+
+{
+nome:"Omelete Fit",
+preco:6.5,
+cat:"low",
+img:"https://images.unsplash.com/photo-1525351484163-7529414344d8",
+desc:"Ovos e espinafre"
+},
+
+{
+nome:"Carne + Legumes",
+preco:9.5,
+cat:"low",
+img:"https://images.unsplash.com/photo-1550547660-d9450f859349",
+desc:"Carne magra"
+},
+
+{
+nome:"Wrap Fitness",
+preco:7.8,
+cat:"frango",
+img:"https://images.unsplash.com/photo-1552332386-f8dd00dc2f85",
+desc:"Wrap saudável de frango"
+}
 ];
 
-let carrinho = [];
-let filtro = "all";
+let carrinho=[];
+let filtro="all";
 
 function render(){
-    const menu = document.getElementById("menu");
-    const search = document.querySelector("input").value.toLowerCase();
-    menu.innerHTML = "";
+const menu=document.getElementById("menu");
+const search=document.querySelector("input").value.toLowerCase();
+menu.innerHTML="";
 
-    foods
-    .filter(f => filtro === "all" || f.cat === filtro)
-    .filter(f => f.nome.toLowerCase().includes(search))
-    .forEach(f => {
-        menu.innerHTML += `
-        <div class="card">
-            <img src="${f.img}">
-            <div class="content">
-                <div class="title">${f.nome}</div>
-                <div class="price">€${f.preco}</div>
+foods
+.filter(f=>filtro==="all"||f.cat===filtro)
+.filter(f=>f.nome.toLowerCase().includes(search))
+.forEach(f=>{
+menu.innerHTML+=`
+<div class="card">
+<img src="${f.img}">
+<div class="content">
+<div class="title">${f.nome}</div>
+<div class="price">€${f.preco}</div>
 
-                <button class="details-btn" onclick="toggle(this)">Detalhes</button>
-                <div class="details">${f.desc}</div>
+<button class="details-btn" onclick="toggle(this)">Detalhes</button>
+<div class="details">${f.desc}</div>
 
-                <button class="add-btn" onclick="add('${f.nome}', ${f.preco})">Adicionar</button>
-            </div>
-        </div>`;
-    });
+<button class="add-btn" onclick="add('${f.nome}',${f.preco})">Adicionar</button>
+</div>
+</div>`;
+});
 }
 
 function toggle(btn){
-    const d = btn.nextElementSibling;
-    d.style.display = d.style.display === "block" ? "none" : "block";
+const d=btn.nextElementSibling;
+d.style.display=d.style.display==="block"?"none":"block";
 }
 
-function add(nome, preco){
-    carrinho.push(preco);
+function add(nome,preco){
+carrinho.push(preco);
 
-    const li = document.createElement("li");
-    li.textContent = nome + " €" + preco;
+const li=document.createElement("li");
+li.textContent=nome+" €"+preco;
 
-    li.onclick = () => {
-        li.remove();
-        carrinho.splice(carrinho.indexOf(preco), 1);
-        updateTotal();
-    };
+li.onclick=()=>{
+li.remove();
+carrinho.splice(carrinho.indexOf(preco),1);
+updateTotal();
+};
 
-    document.getElementById("cart").appendChild(li);
-    updateTotal();
+document.getElementById("cart").appendChild(li);
+updateTotal();
 }
 
 function updateTotal(){
-    const total = carrinho.reduce((a,b)=>a+b,0);
-    document.getElementById("total").textContent = total.toFixed(2);
+const total=carrinho.reduce((a,b)=>a+b,0);
+document.getElementById("total").textContent=total.toFixed(2);
 }
 
-function setFilter(cat, el){
-    filtro = cat;
-    document.querySelectorAll(".cat").forEach(c => c.classList.remove("active"));
-    el.classList.add("active");
-    render();
+function setFilter(cat,el){
+filtro=cat;
+document.querySelectorAll(".cat").forEach(c=>c.classList.remove("active"));
+el.classList.add("active");
+render();
 }
 
 function toggleCart(){
-    document.getElementById("cartBox").classList.toggle("open");
+document.getElementById("cartBox").classList.toggle("open");
 }
 
 render();
