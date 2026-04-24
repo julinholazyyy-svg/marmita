@@ -16,8 +16,9 @@ body {
 header {
     display: flex;
     justify-content: space-between;
-    align-items: center;
     padding: 15px 20px;
+    font-size: 22px;
+    font-weight: bold;
 }
 
 /* CART BUTTON */
@@ -31,13 +32,7 @@ header {
 
 /* LOCATION */
 .location {
-    padding: 0 20px 10px;
-}
-
-select {
-    padding: 8px;
-    border-radius: 8px;
-    border: none;
+    padding: 10px 20px;
 }
 
 /* SEARCH */
@@ -74,7 +69,7 @@ select {
 /* GRID */
 .container {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
     gap: 20px;
     padding: 20px;
 }
@@ -82,7 +77,7 @@ select {
 /* CARD */
 .card {
     background: #1a1d23;
-    border-radius: 12px;
+    border-radius: 15px;
     overflow: hidden;
     transition: 0.2s;
 }
@@ -93,12 +88,19 @@ select {
 
 .card img {
     width: 100%;
-    height: 170px;
+    height: 180px;
     object-fit: cover;
 }
 
+/* CONTENT */
 .content {
-    padding: 10px;
+    padding: 12px;
+}
+
+.title {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 5px;
 }
 
 .price {
@@ -106,10 +108,11 @@ select {
     font-weight: bold;
 }
 
+/* BUTTONS */
 button {
     width: 100%;
-    margin-top: 5px;
-    padding: 8px;
+    margin-top: 6px;
+    padding: 9px;
     border: none;
     border-radius: 8px;
     cursor: pointer;
@@ -124,16 +127,17 @@ button {
     color: #aaa;
 }
 
-/* CART */
+/* CART (MENOR AGORA) */
 .cart {
     position: fixed;
-    right: -320px;
+    right: -260px;
     top: 0;
-    width: 300px;
+    width: 240px;
     height: 100%;
     background: #1a1d23;
     padding: 15px;
     transition: 0.3s;
+    font-size: 14px;
 }
 
 .cart.open {
@@ -145,29 +149,24 @@ button {
 <body>
 
 <header>
-    🍱 Risilio
-    <div class="cart-btn" onclick="toggleCart()">🛒 Carrinho</div>
+🍱 Risilio
+<div class="cart-btn" onclick="toggleCart()">🛒</div>
 </header>
 
 <div class="location">
-    📍 Entrega em:
-    <select>
-        <option>Guimarães</option>
-        <option>Porto</option>
-        <option>Braga</option>
-    </select>
+📍 Entrega: Guimarães | Porto | Braga
 </div>
 
 <div class="search">
-    <input type="text" placeholder="Procurar marmita..." oninput="render()">
+<input type="text" placeholder="Procurar..." oninput="render()">
 </div>
 
 <div class="categories">
-    <div class="cat active" onclick="setFilter('all', this)">Todos</div>
-    <div class="cat" onclick="setFilter('frango', this)">Frango</div>
-    <div class="cat" onclick="setFilter('peixe', this)">Peixe</div>
-    <div class="cat" onclick="setFilter('veg', this)">Vegetariano</div>
-    <div class="cat" onclick="setFilter('low', this)">Low Carb</div>
+<div class="cat active" onclick="setFilter('all', this)">Todos</div>
+<div class="cat" onclick="setFilter('frango', this)">Frango</div>
+<div class="cat" onclick="setFilter('peixe', this)">Peixe</div>
+<div class="cat" onclick="setFilter('veg', this)">Vegetariano</div>
+<div class="cat" onclick="setFilter('low', this)">Low Carb</div>
 </div>
 
 <div class="container" id="menu"></div>
@@ -181,18 +180,18 @@ button {
 
 <script>
 const foods = [
-{nome:"Frango + Batata Doce",preco:8.5,cat:"frango",img:"https://images.unsplash.com/photo-1604908176997-43194b3c8f74",desc:"Frango, batata doce e brócolos"},
+{nome:"Frango + Batata Doce Premium",preco:8.5,cat:"frango",img:"https://images.unsplash.com/photo-1600891964599-f61ba0e24092",desc:"Frango suculento, batata doce assada"},
+{nome:"Frango + Quinoa Fit",preco:9,cat:"frango",img:"https://images.unsplash.com/photo-1512058564366-c9e3e046f9c9",desc:"Frango e quinoa nutritiva"},
 {nome:"Frango Grelhado + Arroz",preco:9,cat:"frango",img:"https://images.unsplash.com/photo-1504674900247-0877df9cc836",desc:"Frango e arroz integral"},
-{nome:"Frango Low Carb",preco:8,cat:"frango",img:"https://images.unsplash.com/photo-1478145046317-39f10e56b5e9",desc:"Frango e legumes"},
-{nome:"Salmão Fit",preco:10,cat:"peixe",img:"https://images.unsplash.com/photo-1546069901-ba9599a7e63c",desc:"Salmão com arroz"},
-{nome:"Atum Bowl",preco:9,cat:"peixe",img:"https://images.unsplash.com/photo-1512621776951-a57141f2eefd",desc:"Atum e legumes"},
-{nome:"Tilápia + Legumes",preco:9.5,cat:"peixe",img:"https://images.unsplash.com/photo-1490645935967-10de6ba17061",desc:"Peixe leve e saudável"},
-{nome:"Vegetariano Bowl",preco:7.5,cat:"veg",img:"https://images.unsplash.com/photo-1512621776951-a57141f2eefd",desc:"Quinoa, grão e legumes"},
-{nome:"Salada Proteica",preco:7,cat:"veg",img:"https://images.unsplash.com/photo-1498837167922-ddd27525d352",desc:"Salada com proteína vegetal"},
+{nome:"Salmão Premium",preco:11,cat:"peixe",img:"https://images.unsplash.com/photo-1546069901-ba9599a7e63c",desc:"Salmão grelhado"},
+{nome:"Atum Bowl",preco:9,cat:"peixe",img:"https://images.unsplash.com/photo-1512621776951-a57141f2eefd",desc:"Atum fresco"},
+{nome:"Tilápia + Legumes",preco:9.5,cat:"peixe",img:"https://images.unsplash.com/photo-1490645935967-10de6ba17061",desc:"Peixe leve"},
+{nome:"Vegetariano Bowl",preco:7.5,cat:"veg",img:"https://images.unsplash.com/photo-1512621776951-a57141f2eefd",desc:"Quinoa e legumes"},
+{nome:"Salada Proteica",preco:7,cat:"veg",img:"https://images.unsplash.com/photo-1498837167922-ddd27525d352",desc:"Salada completa"},
 {nome:"Omelete Fit",preco:6.5,cat:"low",img:"https://images.unsplash.com/photo-1490645935967-10de6ba17061",desc:"Ovos e espinafre"},
-{nome:"Carne + Legumes",preco:9.5,cat:"low",img:"https://images.unsplash.com/photo-1504674900247-0877df9cc836",desc:"Carne magra e legumes"},
-{nome:"Frango + Quinoa",preco:8.8,cat:"frango",img:"https://images.unsplash.com/photo-1604908176997-43194b3c8f74",desc:"Frango com quinoa"},
-{nome:"Salmão Premium",preco:11,cat:"peixe",img:"https://images.unsplash.com/photo-1546069901-ba9599a7e63c",desc:"Salmão especial"}
+{nome:"Carne + Legumes",preco:9.5,cat:"low",img:"https://images.unsplash.com/photo-1504674900247-0877df9cc836",desc:"Carne magra"},
+{nome:"Frango Low Carb",preco:8,cat:"low",img:"https://images.unsplash.com/photo-1600891964599-f61ba0e24092",desc:"Frango sem arroz"},
+{nome:"Wrap Fitness",preco:7.8,cat:"frango",img:"https://images.unsplash.com/photo-1552332386-f8dd00dc2f85",desc:"Wrap saudável"}
 ];
 
 let carrinho = [];
@@ -211,10 +210,10 @@ function render(){
         <div class="card">
             <img src="${f.img}">
             <div class="content">
-                <b>${f.nome}</b>
+                <div class="title">${f.nome}</div>
                 <div class="price">€${f.preco}</div>
 
-                <button class="details-btn" onclick="toggle(this)">Ver detalhes</button>
+                <button class="details-btn" onclick="toggle(this)">Detalhes</button>
                 <div class="details">${f.desc}</div>
 
                 <button class="add-btn" onclick="add('${f.nome}', ${f.preco})">Adicionar</button>
