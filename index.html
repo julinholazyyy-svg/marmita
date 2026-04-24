@@ -12,7 +12,6 @@ background:#0f1115;
 color:white;
 }
 
-/* HEADER */
 header{
 display:flex;
 justify-content:space-between;
@@ -30,14 +29,12 @@ cursor:pointer;
 color:black;
 }
 
-/* DELIVERY INFO */
 .delivery{
 padding:10px 20px;
 color:#aaa;
 font-size:14px;
 }
 
-/* SEARCH */
 .search{
 padding:10px 20px;
 }
@@ -49,7 +46,6 @@ border-radius:10px;
 border:none;
 }
 
-/* CATEGORIES */
 .categories{
 display:flex;
 gap:10px;
@@ -68,7 +64,6 @@ background:#2ecc71;
 color:black;
 }
 
-/* GRID */
 .container{
 display:grid;
 grid-template-columns:repeat(auto-fill,minmax(260px,1fr));
@@ -76,7 +71,6 @@ gap:20px;
 padding:20px;
 }
 
-/* CARD */
 .card{
 background:#1a1d23;
 border-radius:15px;
@@ -122,7 +116,6 @@ font-size:13px;
 color:#aaa;
 }
 
-/* CART */
 .cart{
 position:fixed;
 right:-320px;
@@ -137,7 +130,6 @@ z-index:1000;
 
 .cart.open{right:0}
 
-/* OVERLAY */
 .overlay{
 position:fixed;
 top:0;
@@ -151,7 +143,6 @@ z-index:999;
 
 .overlay.show{display:block}
 
-/* CHECKOUT BUTTON */
 .checkout{
 background:#2ecc71;
 color:black;
@@ -172,13 +163,12 @@ font-weight:bold;
 <div class="cart-btn" onclick="toggleCart()">🛒 Carrinho</div>
 </header>
 
-<!-- LOCALIDADES -->
 <div class="delivery">
 📍 Entregamos em: <b>Braga • Porto • Guimarães</b>
 </div>
 
 <div class="search">
-<input type="text" placeholder="Procurar marmita..." oninput="render()">
+<input type="text" placeholder="Procurar..." oninput="render()">
 </div>
 
 <div class="categories">
@@ -191,40 +181,68 @@ font-weight:bold;
 
 <div class="container" id="menu"></div>
 
-<!-- OVERLAY -->
 <div class="overlay" id="overlay" onclick="closeCart()"></div>
 
-<!-- CART -->
 <div class="cart" id="cartBox">
 <h3>🛒 Carrinho</h3>
-
 <ul id="cart"></ul>
-
 <p>Total: €<span id="total">0</span></p>
 
 <div class="checkout" onclick="checkout()">
 Finalizar Pedido
 </div>
-
 </div>
 
 <script>
 
 const foods = [
-{nome:"Frango + Batata Doce",preco:8.5,cat:"frango",img:"https://images.pexels.com/photos/376464/pexels-photo-376464.jpeg",desc:"Frango grelhado com batata doce"},
-{nome:"Frango + Quinoa Fit",preco:9,cat:"frango",img:"https://images.pexels.com/photos/1640777/pexels-photo-1640777.jpeg",desc:"Frango com quinoa saudável"},
-{nome:"Wrap de Frango",preco:7.8,cat:"frango",img:"https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg",desc:"Wrap saudável"},
-{nome:"Frango + Arroz Integral",preco:9,cat:"frango",img:"https://images.pexels.com/photos/1640774/pexels-photo-1640774.jpeg",desc:"Frango e arroz"},
+{
+nome:"Frango + Batata Doce",
+preco:8.5,
+cat:"frango",
+img:"https://images.unsplash.com/photo-1604908176997-43194b3c8f74?auto=format&fit=crop&w=800&q=80",
+desc:"Frango grelhado com batata doce"
+},
 
-{nome:"Salmão Premium",preco:11,cat:"peixe",img:"https://images.pexels.com/photos/329643/pexels-photo-329643.jpeg",desc:"Salmão grelhado"},
-{nome:"Atum Bowl",preco:9,cat:"peixe",img:"https://images.pexels.com/photos/725991/pexels-photo-725991.jpeg",desc:"Atum saudável"},
-{nome:"Tilápia Fit",preco:9.5,cat:"peixe",img:"https://images.pexels.com/photos/46239/salmon-dish-food-meal-46239.jpeg",desc:"Peixe leve"},
+{
+nome:"Frango + Quinoa Fit",
+preco:9,
+cat:"frango",
+img:"https://images.unsplash.com/photo-1512621776951-a57141f2eefd?auto=format&fit=crop&w=800&q=80",
+desc:"Frango com quinoa saudável"
+},
 
-{nome:"Bowl Vegetariano",preco:7.5,cat:"veg",img:"https://images.pexels.com/photos/1640773/pexels-photo-1640773.jpeg",desc:"Quinoa e legumes"},
-{nome:"Salada Proteica",preco:7,cat:"veg",img:"https://images.pexels.com/photos/1540420773420-3366772f4999.jpeg",desc:"Salada fresca"},
+{
+nome:"Salmão Premium",
+preco:11,
+cat:"peixe",
+img:"https://images.unsplash.com/photo-1467003909585-2f8a72700288?auto=format&fit=crop&w=800&q=80",
+desc:"Salmão grelhado premium"
+},
 
-{nome:"Omelete Fit",preco:6.5,cat:"low",img:"https://images.pexels.com/photos/1525351484163-7529414344d8.jpeg",desc:"Ovos e espinafre"},
-{nome:"Carne + Legumes",preco:9.5,cat:"low",img:"https://images.pexels.com/photos/1550547660-d9450f859349.jpeg",desc:"Carne magra"}
+{
+nome:"Carne + Legumes",
+preco:9.5,
+cat:"low",
+img:"https://images.unsplash.com/photo-1604908177522-40e7e9d8c5d6?auto=format&fit=crop&w=800&q=80",
+desc:"Carne magra com legumes"
+},
+
+{
+nome:"Salada Proteica",
+preco:7,
+cat:"veg",
+img:"https://images.unsplash.com/photo-1540189549336-e6e99c3679fe?auto=format&fit=crop&w=800&q=80",
+desc:"Salada fresca e saudável"
+},
+
+{
+nome:"Omelete Fit",
+preco:6.5,
+cat:"low",
+img:"https://images.unsplash.com/photo-1525351484163-7529414344d8?auto=format&fit=crop&w=800&q=80",
+desc:"Ovos e espinafre"
+}
 ];
 
 let carrinho=[];
@@ -288,7 +306,6 @@ el.classList.add("active");
 render();
 }
 
-/* CART */
 function toggleCart(){
 document.getElementById("cartBox").classList.toggle("open");
 document.getElementById("overlay").classList.toggle("show");
@@ -299,9 +316,8 @@ document.getElementById("cartBox").classList.remove("open");
 document.getElementById("overlay").classList.remove("show");
 }
 
-/* CHECKOUT */
 function checkout(){
-alert("Pedido enviado! Entregamos em Braga, Porto e Guimarães 🚚");
+alert("Pedido confirmado! Entregamos em Braga, Porto e Guimarães 🚚");
 }
 
 render();
