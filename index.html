@@ -120,6 +120,7 @@ font-size:13px;
 color:#aaa;
 }
 
+/* CART */
 .cart{
 position:fixed;
 right:-320px;
@@ -147,6 +148,7 @@ z-index:999;
 
 .overlay.show{display:block}
 
+/* CHECKOUT */
 .checkoutPage{
 position:fixed;
 top:0;
@@ -159,7 +161,8 @@ padding:20px;
 z-index:2000;
 }
 
-.checkoutPage input{
+.checkoutPage input,
+.checkoutPage select{
 width:100%;
 padding:10px;
 margin:8px 0;
@@ -177,6 +180,7 @@ text-align:center;
 margin-top:10px;
 }
 
+/* CONFIRMED */
 .confirmed{
 position:fixed;
 top:0;
@@ -225,25 +229,34 @@ color:#2ecc71;
 <ul id="cart"></ul>
 <p>Total: €<span id="total">0</span></p>
 
-<div class="checkout" onclick="openCheckout()">
+<div class="confirm" onclick="openCheckout()">
 Finalizar Pedido
 </div>
 </div>
 
 <!-- CHECKOUT -->
 <div class="checkoutPage" id="checkoutPage">
+
 <h2>Checkout</h2>
 
 <input id="name" placeholder="Nome">
 <input id="address" placeholder="Morada">
 <input id="phone" placeholder="Telefone">
 
+<!-- LOCALIDADE -->
+<select id="city">
+<option value="">Escolher localidade</option>
+<option>Porto</option>
+<option>Braga</option>
+<option>Guimarães</option>
+</select>
+
 <div class="confirm" onclick="confirmOrder()">
 Confirmar Pedido
 </div>
 </div>
 
-<!-- CONFIRMED -->
+<!-- CONFIRMADO -->
 <div class="confirmed" id="confirmed">
 <div class="check">✔</div>
 <h2>Pedido Confirmado!</h2>
@@ -384,9 +397,19 @@ document.getElementById("checkoutPage").style.display="block";
 }
 
 function confirmOrder(){
+
+const name=document.getElementById("name").value;
+const address=document.getElementById("address").value;
+const phone=document.getElementById("phone").value;
+const city=document.getElementById("city").value;
+
+if(!name || !address || !phone || !city){
+alert("Preenche todos os campos incluindo a localidade!");
+return;
+}
+
 document.getElementById("checkoutPage").style.display="none";
 document.getElementById("cartBox").classList.remove("open");
-
 document.getElementById("confirmed").style.display="flex";
 
 carrinho=[];
@@ -400,3 +423,4 @@ render();
 
 </body>
 </html>
+
