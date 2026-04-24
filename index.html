@@ -1,327 +1,62 @@
-<!DOCTYPE html>
-<html lang="pt">
-<head>
-<meta charset="UTF-8">
-<title>Risilio - App</title>
-
-<style>
-body{
-margin:0;
-font-family:Arial;
-background:#0f1115;
-color:white;
-}
-
-header{
-display:flex;
-justify-content:space-between;
-align-items:center;
-padding:15px 20px;
-font-size:22px;
-font-weight:bold;
-}
-
-.cart-btn{
-background:#2ecc71;
-padding:8px 15px;
-border-radius:20px;
-cursor:pointer;
-color:black;
-}
-
-.delivery{
-padding:10px 20px;
-color:#aaa;
-font-size:14px;
-}
-
-.search{
-padding:10px 20px;
-}
-
-.search input{
-width:100%;
-padding:10px;
-border-radius:10px;
-border:none;
-}
-
-.categories{
-display:flex;
-gap:10px;
-padding:10px 20px;
-}
-
-.cat{
-background:#1a1d23;
-padding:8px 15px;
-border-radius:20px;
-cursor:pointer;
-}
-
-.cat.active{
-background:#2ecc71;
-color:black;
-}
-
-.container{
-display:grid;
-grid-template-columns:repeat(auto-fill,minmax(260px,1fr));
-gap:20px;
-padding:20px;
-}
-
-.card{
-background:#1a1d23;
-border-radius:15px;
-overflow:hidden;
-}
-
-.card img{
-width:100%;
-height:170px;
-object-fit:cover;
-}
-
-.content{
-padding:12px;
-}
-
-.title{
-font-size:17px;
-font-weight:bold;
-}
-
-.price{
-color:#2ecc71;
-font-weight:bold;
-margin-top:5px;
-}
-
-button{
-width:100%;
-margin-top:6px;
-padding:9px;
-border:none;
-border-radius:8px;
-cursor:pointer;
-}
-
-.details-btn{background:#2a2d35;color:white}
-.add-btn{background:#2ecc71;color:black}
-
-.details{
-display:none;
-font-size:13px;
-color:#aaa;
-}
-
-.cart{
-position:fixed;
-right:-320px;
-top:0;
-width:280px;
-height:100%;
-background:#1a1d23;
-padding:15px;
-transition:0.3s;
-z-index:1000;
-}
-
-.cart.open{right:0}
-
-.overlay{
-position:fixed;
-top:0;
-left:0;
-width:100%;
-height:100%;
-background:rgba(0,0,0,0.5);
-display:none;
-z-index:999;
-}
-
-.overlay.show{display:block}
-
-.checkout{
-background:#2ecc71;
-color:black;
-padding:10px;
-border-radius:8px;
-text-align:center;
-margin-top:10px;
-cursor:pointer;
-font-weight:bold;
-}
-</style>
-</head>
-
-<body>
-
-<header>
-🍱 Risilio
-<div class="cart-btn" onclick="toggleCart()">🛒 Carrinho</div>
-</header>
-
-<div class="delivery">
-📍 Entregamos em: <b>Braga • Porto • Guimarães</b>
-</div>
-
-<div class="search">
-<input type="text" placeholder="Procurar..." oninput="render()">
-</div>
-
-<div class="categories">
-<div class="cat active" onclick="setFilter('all',this)">Todos</div>
-<div class="cat" onclick="setFilter('frango',this)">Frango</div>
-<div class="cat" onclick="setFilter('peixe',this)">Peixe</div>
-<div class="cat" onclick="setFilter('veg',this)">Vegetariano</div>
-<div class="cat" onclick="setFilter('low',this)">Low Carb</div>
-</div>
-
-<div class="container" id="menu"></div>
-
 <div class="overlay" id="overlay" onclick="closeCart()"></div>
 
-<div class="cart" id="cartBox">
-<h3>🛒 Carrinho</h3>
-<ul id="cart"></ul>
+<div class="cart" id="cart">
+<h3>🛒 Carrinho (<span id="count">0</span>)</h3>
+
+<ul id="list"></ul>
+
 <p>Total: €<span id="total">0</span></p>
 
-<div class="checkout" onclick="checkout()">
-Finalizar Pedido
-</div>
+<button onclick="clearCart()" style="background:red;color:white;margin-top:10px">
+Limpar carrinho
+</button>
 </div>
 
 <script>
 
-const foods = [
-{
-nome:"Frango + Batata Doce",
-preco:8.5,
-cat:"frango",
-img:"https://images.unsplash.com/photo-1604908176997-43194b3c8f74?auto=format&fit=crop&w=800&q=80",
-desc:"Frango grelhado com batata doce"
-},
-
-{
-nome:"Frango + Quinoa Fit",
-preco:9,
-cat:"frango",
-img:"https://images.unsplash.com/photo-1512621776951-a57141f2eefd?auto=format&fit=crop&w=800&q=80",
-desc:"Frango com quinoa saudável"
-},
-
-{
-nome:"Salmão Premium",
-preco:11,
-cat:"peixe",
-img:"https://images.unsplash.com/photo-1467003909585-2f8a72700288?auto=format&fit=crop&w=800&q=80",
-desc:"Salmão grelhado premium"
-},
-
-{
-nome:"Carne + Legumes",
-preco:9.5,
-cat:"low",
-img:"https://images.unsplash.com/photo-1604908177522-40e7e9d8c5d6?auto=format&fit=crop&w=800&q=80",
-desc:"Carne magra com legumes"
-},
-
-{
-nome:"Salada Proteica",
-preco:7,
-cat:"veg",
-img:"https://images.unsplash.com/photo-1540189549336-e6e99c3679fe?auto=format&fit=crop&w=800&q=80",
-desc:"Salada fresca e saudável"
-},
-
-{
-nome:"Omelete Fit",
-preco:6.5,
-cat:"low",
-img:"https://images.unsplash.com/photo-1525351484163-7529414344d8?auto=format&fit=crop&w=800&q=80",
-desc:"Ovos e espinafre"
-}
-];
-
-let carrinho=[];
-let filtro="all";
-
-function render(){
-const menu=document.getElementById("menu");
-const search=document.querySelector("input").value.toLowerCase();
-menu.innerHTML="";
-
-foods
-.filter(f=>filtro==="all"||f.cat===filtro)
-.filter(f=>f.nome.toLowerCase().includes(search))
-.forEach(f=>{
-menu.innerHTML+=`
-<div class="card">
-<img src="${f.img}">
-<div class="content">
-<div class="title">${f.nome}</div>
-<div class="price">€${f.preco}</div>
-
-<button class="details-btn" onclick="toggle(this)">Detalhes</button>
-<div class="details">${f.desc}</div>
-
-<button class="add-btn" onclick="add('${f.nome}',${f.preco})">Adicionar</button>
-</div>
-</div>`;
-});
-}
-
-function toggle(btn){
-const d=btn.nextElementSibling;
-d.style.display=d.style.display==="block"?"none":"block";
-}
+let cart = JSON.parse(localStorage.getItem("cart")) || [];
 
 function add(nome,preco){
-carrinho.push(preco);
-
-const li=document.createElement("li");
-li.textContent=nome+" €"+preco;
-
-li.onclick=()=>{
-li.remove();
-carrinho.splice(carrinho.indexOf(preco),1);
-updateTotal();
-};
-
-document.getElementById("cart").appendChild(li);
-updateTotal();
+cart.push({nome,preco});
+save();
+updateCart();
 }
 
-function updateTotal(){
-const total=carrinho.reduce((a,b)=>a+b,0);
-document.getElementById("total").textContent=total.toFixed(2);
+function save(){
+localStorage.setItem("cart",JSON.stringify(cart));
 }
 
-function setFilter(cat,el){
-filtro=cat;
-document.querySelectorAll(".cat").forEach(c=>c.classList.remove("active"));
-el.classList.add("active");
-render();
+function updateCart(){
+const list = document.getElementById("list");
+list.innerHTML = "";
+
+let total = 0;
+
+cart.forEach((c)=>{
+list.innerHTML += `<li>${c.nome} - €${c.preco}</li>`;
+total += c.preco;
+});
+
+document.getElementById("total").innerText = total.toFixed(2);
+document.getElementById("count").innerText = cart.length;
 }
 
 function toggleCart(){
-document.getElementById("cartBox").classList.toggle("open");
+document.getElementById("cart").classList.toggle("open");
 document.getElementById("overlay").classList.toggle("show");
 }
 
 function closeCart(){
-document.getElementById("cartBox").classList.remove("open");
+document.getElementById("cart").classList.remove("open");
 document.getElementById("overlay").classList.remove("show");
 }
 
-function checkout(){
-alert("Pedido confirmado! Entregamos em Braga, Porto e Guimarães 🚚");
+function clearCart(){
+cart = [];
+save();
+updateCart();
 }
 
-render();
-</script>
+updateCart();
 
-</body>
-</html>
+</script>
