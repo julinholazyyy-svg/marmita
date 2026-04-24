@@ -120,6 +120,7 @@ font-size:13px;
 color:#aaa;
 }
 
+/* CART */
 .cart{
 position:fixed;
 right:-320px;
@@ -147,6 +148,7 @@ z-index:999;
 
 .overlay.show{display:block}
 
+/* CHECKOUT */
 .checkoutPage{
 position:fixed;
 top:0;
@@ -159,7 +161,8 @@ padding:20px;
 z-index:2000;
 }
 
-.checkoutPage input{
+.checkoutPage input,
+.checkoutPage select{
 width:100%;
 padding:10px;
 margin:8px 0;
@@ -177,6 +180,7 @@ text-align:center;
 margin-top:10px;
 }
 
+/* CONFIRMED */
 .confirmed{
 position:fixed;
 top:0;
@@ -202,6 +206,7 @@ color:#2ecc71;
 
 <header>
 🍱 Risilio
+
 <div class="cart-btn" onclick="toggleCart()">
 🛒 <span class="badge" id="badge">0</span>
 </div>
@@ -225,25 +230,39 @@ color:#2ecc71;
 <ul id="cart"></ul>
 <p>Total: €<span id="total">0</span></p>
 
-<div class="checkout" onclick="openCheckout()">
+<div class="confirm" onclick="openCheckout()">
 Finalizar Pedido
 </div>
 </div>
 
 <!-- CHECKOUT -->
 <div class="checkoutPage" id="checkoutPage">
+
 <h2>Checkout</h2>
 
-<input id="name" placeholder="Nome">
-<input id="address" placeholder="Morada">
-<input id="phone" placeholder="Telefone">
+<input id="name" placeholder="Nome completo">
+<input id="address" placeholder="Morada completa">
+
+<select id="city">
+<option value="">Escolher cidade</option>
+<option>Braga</option>
+<option>Porto</option>
+<option>Guimarães</option>
+</select>
+
+<select id="payment">
+<option value="">Método de pagamento</option>
+<option>MB WAY</option>
+<option>Dinheiro</option>
+</select>
 
 <div class="confirm" onclick="confirmOrder()">
 Confirmar Pedido
 </div>
+
 </div>
 
-<!-- CONFIRMED -->
+<!-- CONFIRMADO -->
 <div class="confirmed" id="confirmed">
 <div class="check">✔</div>
 <h2>Pedido Confirmado!</h2>
@@ -294,20 +313,6 @@ preco:9,
 img:"https://images.unsplash.com/photo-1559847844-5315695dadae?auto=format&fit=crop&w=800&q=80",
 desc:"Atum com arroz e legumes",
 fav:false
-},
-{
-nome:"Wrap de Frango",
-preco:7.8,
-img:"https://images.unsplash.com/photo-1552332386-f8dd00dc2f85?auto=format&fit=crop&w=800&q=80",
-desc:"Wrap saudável de frango",
-fav:false
-},
-{
-nome:"Bowl Vegetariano",
-preco:7.5,
-img:"https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&w=800&q=80",
-desc:"Quinoa e legumes frescos",
-fav:false
 }
 ];
 
@@ -333,10 +338,6 @@ menu.innerHTML+=`
 <div class="details">${f.desc}</div>
 
 <button class="add-btn" onclick="add('${f.nome}',${f.preco})">Adicionar</button>
-
-<button class="fav-btn" onclick="fav(${i})">
-${f.fav?"❤️ Favorito":"🤍 Favoritar"}
-</button>
 
 </div>
 </div>`;
@@ -374,19 +375,24 @@ document.getElementById("cartBox").classList.remove("open");
 document.getElementById("overlay").classList.remove("show");
 }
 
-function fav(i){
-foods[i].fav=!foods[i].fav;
-render();
-}
-
 function openCheckout(){
 document.getElementById("checkoutPage").style.display="block";
 }
 
 function confirmOrder(){
+
+const name=document.getElementById("name").value;
+const address=document.getElementById("address").value;
+const city=document.getElementById("city").value;
+const payment=document.getElementById("payment").value;
+
+if(!name || !address || !city || !payment){
+alert("Preenche todos os campos!");
+return;
+}
+
 document.getElementById("checkoutPage").style.display="none";
 document.getElementById("cartBox").classList.remove("open");
-
 document.getElementById("confirmed").style.display="flex";
 
 carrinho=[];
