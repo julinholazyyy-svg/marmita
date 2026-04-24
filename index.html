@@ -8,20 +8,21 @@
 body {
     margin: 0;
     font-family: 'Inter', sans-serif;
-    background: #f5f6fa;
+    background: #0f1115;
+    color: white;
     display: flex;
 }
 
-/* SIDEBAR CARRINHO */
+/* SIDEBAR */
 .cart {
     width: 300px;
-    background: white;
+    background: #1a1d23;
     height: 100vh;
     padding: 20px;
-    box-shadow: -5px 0 20px rgba(0,0,0,0.08);
     position: fixed;
     right: 0;
     top: 0;
+    border-left: 1px solid #2a2d35;
 }
 
 .cart h2 {
@@ -30,6 +31,7 @@ body {
 
 .cart ul {
     padding-left: 18px;
+    color: #ccc;
 }
 
 /* MAIN */
@@ -40,32 +42,31 @@ body {
 
 /* HEADER */
 header {
-    background: #27ae60;
-    color: white;
     padding: 20px 30px;
     font-size: 24px;
     font-weight: bold;
+    border-bottom: 1px solid #2a2d35;
 }
 
 /* GRID */
 .container {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-    gap: 25px;
-    padding: 30px;
+    gap: 20px;
+    padding: 25px;
 }
 
 /* CARD */
 .card {
-    background: white;
+    background: #1a1d23;
     border-radius: 15px;
     overflow: hidden;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.06);
     transition: 0.2s;
+    border: 1px solid #2a2d35;
 }
 
 .card:hover {
-    transform: translateY(-4px);
+    transform: scale(1.02);
 }
 
 /* IMAGE */
@@ -81,41 +82,42 @@ header {
 }
 
 .title {
-    font-size: 18px;
+    font-size: 17px;
     font-weight: 600;
 }
 
 .price {
-    color: #27ae60;
+    color: #2ecc71;
     font-weight: bold;
-    margin: 8px 0;
+    margin: 6px 0;
 }
 
 /* BUTTONS */
 .btn {
     width: 100%;
     padding: 10px;
-    border: none;
     border-radius: 8px;
+    border: none;
     cursor: pointer;
     margin-top: 8px;
     font-weight: 600;
 }
 
 .details-btn {
-    background: #ecf0f1;
+    background: #2a2d35;
+    color: #ccc;
 }
 
 .add-btn {
-    background: #27ae60;
-    color: white;
+    background: #2ecc71;
+    color: black;
 }
 
 /* DETAILS */
 .details {
     display: none;
     font-size: 14px;
-    color: #555;
+    color: #aaa;
     margin-top: 8px;
 }
 </style>
@@ -126,7 +128,7 @@ header {
 <div class="main">
 
 <header>
-🍱 Risilio - Marmitas Fitness
+🍱 Risilio
 </header>
 
 <div class="container">
@@ -179,7 +181,7 @@ header {
 
 <!-- CARRINHO -->
 <div class="cart">
-    <h2>Carrinho</h2>
+    <h2>🛒 Carrinho</h2>
     <ul id="cart-list"></ul>
 </div>
 
