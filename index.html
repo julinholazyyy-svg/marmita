@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+<meta charset="UTF-8">
+<title>Risilio - Marmitas Fitness</title>
+
+<style>
+body {
+    font-family: Arial;
+    background: #f4f4f4;
+    margin: 0;
+}
+
+header {
+    background: #2ecc71;
+    color: white;
+    padding: 15px;
+    text-align: center;
+}
+
+.container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.card {
+    background: white;
+    width: 250px;
+    margin: 15px;
+    padding: 15px;
+    border-radius: 10px;
+    text-align: center;
+}
+
+.card img {
+    width: 100%;
+    border-radius: 10px;
+}
+
+button {
+    margin-top: 8px;
+    padding: 8px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.details {
+    display: none;
+    margin-top: 10px;
+    font-size: 14px;
+}
+
+.cart {
+    position: fixed;
+    top: 10px;
+    right: 10px;
+    background: white;
+    padding: 10px;
+    border-radius: 10px;
+    width: 200px;
+}
+</style>
+
+</head>
+<body>
+
+<header>
+    <h1>🍱 Risilio - Marmitas Fitness</h1>
+</header>
+
+<div class="cart">
+    <h3>Carrinho</h3>
+    <ul id="cart-list"></ul>
+</div>
+
+<div class="container">
+
+    <!-- Marmita 1 -->
+    <div class="card">
+        <img src="https://via.placeholder.com/250" alt="Marmita">
+        <h3>Frango + Batata Doce</h3>
+        <p>€8.50</p>
+
+        <button onclick="toggleDetails(this)">Ver detalhes</button>
+        <div class="details">
+            Frango grelhado, batata doce, brócolos
+        </div>
+
+        <button onclick="addToCart('Frango + Batata Doce')">Adicionar</button>
+    </div>
+
+    <!-- Marmita 2 -->
+    <div class="card">
+        <img src="https://via.placeholder.com/250" alt="Marmita">
+        <h3>Salmão + Arroz Integral</h3>
+        <p>€10.00</p>
+
+        <button onclick="toggleDetails(this)">Ver detalhes</button>
+        <div class="details">
+            Salmão grelhado, arroz integral, legumes
+        </div>
+
+        <button onclick="addToCart('Salmão + Arroz Integral')">Adicionar</button>
+    </div>
+
+</div>
+
+<script>
+function toggleDetails(button) {
+    const details = button.nextElementSibling;
+    details.style.display = details.style.display === "block" ? "none" : "block";
+}
+
+function addToCart(item) {
+    const list = document.getElementById("cart-list");
+    const li = document.createElement("li");
+    li.textContent = item;
+    list.appendChild(li);
+}
+</script>
+
+</body>
+</html>
