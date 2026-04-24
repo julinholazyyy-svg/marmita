@@ -7,24 +7,23 @@
 <style>
 body {
     margin: 0;
-    font-family: 'Inter', sans-serif;
+    font-family: Arial;
     background: #0f1115;
     color: white;
 }
 
 /* HEADER */
 header {
-    padding: 20px 30px;
+    padding: 20px;
     font-size: 26px;
     font-weight: bold;
-    border-bottom: 1px solid #2a2d35;
 }
 
 /* CATEGORIAS */
 .categories {
     display: flex;
     gap: 10px;
-    padding: 15px 25px;
+    padding: 10px 20px;
 }
 
 .cat {
@@ -32,13 +31,17 @@ header {
     padding: 8px 15px;
     border-radius: 20px;
     cursor: pointer;
-    border: 1px solid #2a2d35;
+}
+
+.cat.active {
+    background: #2ecc71;
+    color: black;
 }
 
 /* GRID */
 .container {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
     gap: 20px;
     padding: 20px;
 }
@@ -46,64 +49,40 @@ header {
 /* CARD */
 .card {
     background: #1a1d23;
-    border-radius: 15px;
+    border-radius: 12px;
     overflow: hidden;
-    border: 1px solid #2a2d35;
-    transition: 0.2s;
 }
 
-.card:hover {
-    transform: scale(1.03);
-}
-
-/* IMAGE */
 .card img {
     width: 100%;
-    height: 170px;
+    height: 160px;
     object-fit: cover;
 }
 
-/* CONTENT */
 .content {
-    padding: 15px;
-}
-
-.title {
-    font-size: 16px;
-    font-weight: 600;
+    padding: 10px;
 }
 
 .price {
     color: #2ecc71;
-    font-weight: bold;
-    margin: 5px 0;
 }
 
-/* BUTTONS */
-.btn {
+/* BUTTON */
+button {
     width: 100%;
-    padding: 10px;
-    border-radius: 8px;
+    margin-top: 5px;
+    padding: 8px;
     border: none;
-    margin-top: 8px;
+    border-radius: 8px;
     cursor: pointer;
 }
 
-.details-btn {
-    background: #2a2d35;
-    color: #ccc;
-}
+.details-btn { background: #2a2d35; color: white; }
+.add-btn { background: #2ecc71; color: black; }
 
-.add-btn {
-    background: #2ecc71;
-    color: black;
-}
-
-/* DETAILS */
 .details {
     display: none;
     font-size: 13px;
-    color: #aaa;
 }
 
 /* CART */
@@ -111,119 +90,109 @@ header {
     position: fixed;
     right: 0;
     top: 0;
-    width: 280px;
+    width: 260px;
     height: 100%;
     background: #1a1d23;
-    padding: 20px;
-    border-left: 1px solid #2a2d35;
+    padding: 15px;
 }
 
-.cart ul {
-    padding-left: 18px;
+.cart li {
+    margin-bottom: 5px;
 }
 </style>
-
 </head>
+
 <body>
 
 <header>🍱 Risilio</header>
 
 <div class="categories">
-    <div class="cat">Frango</div>
-    <div class="cat">Peixe</div>
-    <div class="cat">Vegetariano</div>
-    <div class="cat">Low Carb</div>
+    <div class="cat active" onclick="filter('all', this)">Todos</div>
+    <div class="cat" onclick="filter('frango', this)">Frango</div>
+    <div class="cat" onclick="filter('peixe', this)">Peixe</div>
+    <div class="cat" onclick="filter('veg', this)">Vegetariano</div>
+    <div class="cat" onclick="filter('low', this)">Low Carb</div>
 </div>
 
-<div class="container">
-
-<!-- VÁRIAS MARMITAS -->
-
-<div class="card">
-<img src="https://images.unsplash.com/photo-1604908176997-43194b3c8f74">
-<div class="content">
-<div class="title">Frango + Batata Doce</div>
-<div class="price">€8.50</div>
-<button class="btn details-btn" onclick="toggleDetails(this)">Ver detalhes</button>
-<div class="details">Frango grelhado, batata doce, brócolos</div>
-<button class="btn add-btn" onclick="addToCart('Frango + Batata Doce')">Adicionar</button>
-</div>
-</div>
-
-<div class="card">
-<img src="https://images.unsplash.com/photo-1546069901-ba9599a7e63c">
-<div class="content">
-<div class="title">Salmão + Arroz Integral</div>
-<div class="price">€10.00</div>
-<button class="btn details-btn" onclick="toggleDetails(this)">Ver detalhes</button>
-<div class="details">Salmão, arroz integral, legumes</div>
-<button class="btn add-btn" onclick="addToCart('Salmão + Arroz Integral')">Adicionar</button>
-</div>
-</div>
-
-<div class="card">
-<img src="https://images.unsplash.com/photo-1512621776951-a57141f2eefd">
-<div class="content">
-<div class="title">Vegetariano Bowl</div>
-<div class="price">€7.50</div>
-<button class="btn details-btn" onclick="toggleDetails(this)">Ver detalhes</button>
-<div class="details">Quinoa, legumes, grão</div>
-<button class="btn add-btn" onclick="addToCart('Vegetariano Bowl')">Adicionar</button>
-</div>
-</div>
-
-<div class="card">
-<img src="https://images.unsplash.com/photo-1504674900247-0877df9cc836">
-<div class="content">
-<div class="title">Carne + Arroz + Legumes</div>
-<div class="price">€9.00</div>
-<button class="btn details-btn" onclick="toggleDetails(this)">Ver detalhes</button>
-<div class="details">Carne magra, arroz, legumes</div>
-<button class="btn add-btn" onclick="addToCart('Carne + Arroz')">Adicionar</button>
-</div>
-</div>
-
-<div class="card">
-<img src="https://images.unsplash.com/photo-1490645935967-10de6ba17061">
-<div class="content">
-<div class="title">Omelete Fitness</div>
-<div class="price">€6.50</div>
-<button class="btn details-btn" onclick="toggleDetails(this)">Ver detalhes</button>
-<div class="details">Ovos, espinafre, queijo light</div>
-<button class="btn add-btn" onclick="addToCart('Omelete Fitness')">Adicionar</button>
-</div>
-</div>
-
-<div class="card">
-<img src="https://images.unsplash.com/photo-1478145046317-39f10e56b5e9">
-<div class="content">
-<div class="title">Frango Low Carb</div>
-<div class="price">€8.00</div>
-<button class="btn details-btn" onclick="toggleDetails(this)">Ver detalhes</button>
-<div class="details">Frango, legumes, zero arroz</div>
-<button class="btn add-btn" onclick="addToCart('Frango Low Carb')">Adicionar</button>
-</div>
-</div>
-
-</div>
+<div class="container" id="menu"></div>
 
 <div class="cart">
-<h2>🛒 Carrinho</h2>
-<ul id="cart-list"></ul>
+<h3>🛒 Carrinho</h3>
+<ul id="cart"></ul>
+<p>Total: €<span id="total">0</span></p>
 </div>
 
 <script>
-function toggleDetails(btn){
-    const d = btn.nextElementSibling;
-    d.style.display = d.style.display === "block" ? "none" : "block";
+const foods = [
+{nome:"Frango + Batata Doce",preco:8.5,cat:"frango",img:"https://images.unsplash.com/photo-1604908176997-43194b3c8f74",desc:"Frango, batata doce"},
+{nome:"Frango Low Carb",preco:8,cat:"frango",img:"https://images.unsplash.com/photo-1478145046317-39f10e56b5e9",desc:"Frango e legumes"},
+{nome:"Frango + Arroz",preco:9,cat:"frango",img:"https://images.unsplash.com/photo-1504674900247-0877df9cc836",desc:"Frango e arroz"},
+{nome:"Salmão Fit",preco:10,cat:"peixe",img:"https://images.unsplash.com/photo-1546069901-ba9599a7e63c",desc:"Salmão e arroz"},
+{nome:"Atum Bowl",preco:9,cat:"peixe",img:"https://images.unsplash.com/photo-1512621776951-a57141f2eefd",desc:"Atum e legumes"},
+{nome:"Vegetariano Bowl",preco:7.5,cat:"veg",img:"https://images.unsplash.com/photo-1512621776951-a57141f2eefd",desc:"Quinoa e legumes"},
+{nome:"Omelete Fit",preco:6.5,cat:"low",img:"https://images.unsplash.com/photo-1490645935967-10de6ba17061",desc:"Ovos e espinafre"},
+{nome:"Carne + Legumes",preco:9.5,cat:"low",img:"https://images.unsplash.com/photo-1504674900247-0877df9cc836",desc:"Carne magra"},
+{nome:"Frango + Quinoa",preco:8.8,cat:"frango",img:"https://images.unsplash.com/photo-1604908176997-43194b3c8f74",desc:"Frango e quinoa"}
+];
+
+let carrinho = [];
+
+function render(filter="all"){
+    const menu = document.getElementById("menu");
+    menu.innerHTML="";
+
+    foods
+    .filter(f => filter==="all" || f.cat===filter)
+    .forEach(f => {
+        menu.innerHTML += `
+        <div class="card">
+            <img src="${f.img}">
+            <div class="content">
+                <b>${f.nome}</b>
+                <div class="price">€${f.preco}</div>
+
+                <button class="details-btn" onclick="toggle(this)">Ver detalhes</button>
+                <div class="details">${f.desc}</div>
+
+                <button class="add-btn" onclick="add('${f.nome}', ${f.preco})">Adicionar</button>
+            </div>
+        </div>`;
+    });
 }
 
-function addToCart(item){
-    const list = document.getElementById("cart-list");
-    const li = document.createElement("li");
-    li.textContent = item;
-    list.appendChild(li);
+function toggle(btn){
+    const d = btn.nextElementSibling;
+    d.style.display = d.style.display==="block" ? "none" : "block";
 }
+
+function add(nome, preco){
+    carrinho.push(preco);
+
+    const li = document.createElement("li");
+    li.textContent = nome + " €" + preco;
+
+    li.onclick = () => {
+        li.remove();
+        carrinho.splice(carrinho.indexOf(preco),1);
+        updateTotal();
+    };
+
+    document.getElementById("cart").appendChild(li);
+    updateTotal();
+}
+
+function updateTotal(){
+    const total = carrinho.reduce((a,b)=>a+b,0);
+    document.getElementById("total").textContent = total.toFixed(2);
+}
+
+function filter(cat, el){
+    document.querySelectorAll(".cat").forEach(c=>c.classList.remove("active"));
+    el.classList.add("active");
+    render(cat);
+}
+
+render();
 </script>
 
 </body>
